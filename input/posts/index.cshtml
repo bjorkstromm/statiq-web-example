@@ -1,0 +1,27 @@
+ArchiveSources: "posts/*.md"
+ArchiveKey: tags
+ArchiveDestination: >
+  => GetInt("Index") <= 1 ? $"tags/{GroupKey}/index.html" : $"tagss/{GroupKey}/{GetInt("Index")}.html"
+ArchivePageSize: 10
+ArchiveOrderKey: Published
+ArchiveOrderDescending: true
+Title: Tags
+ArchiveTitle: => GroupKey
+NoSidebar: => !ContainsKey("GroupKey")
+---
+@if (Document.ContainsKey(Keys.GroupKey))
+{
+    <p>Description</p>
+}
+else
+{
+    @foreach (var topic in Document.GetChildren())
+    {        
+        <div>
+            <div class="p-3 mb-2 bg-light page-box">
+                <h4>@Html.DocumentLink(topic)</h4>
+                <p>@topic.GetString(Keys.GroupKey)</p>
+            </div>
+        </div>
+    }
+}

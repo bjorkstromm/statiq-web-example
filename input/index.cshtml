@@ -1,0 +1,28 @@
+title: Home
+subheading: An example blog built with Statiq Web
+---
+<div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+        @foreach (var post in Outputs[nameof(Content)]["posts/index.html"].GetChildren().OrderByDescending(x => x.GetDateTime(WebKeys.Published)).Take(5))
+        {
+            <div class="post-preview">
+                <a href="@Context.GetLink(post)">
+                <h2 class="post-title">
+                    @post.GetTitle()
+                </h2>
+                <h5 class="post-subtitle">
+                    @Html.Raw(post.GetString("Excerpt"))
+                </h5>
+                </a>
+                <p class="post-meta">Posted by
+                <a href="#">@post.GetString("Author")</a>
+                on @post.GetDateTime(WebKeys.Published).ToLongDateString()</p>
+            </div>
+            <hr>
+        }
+        <!-- Pager -->
+        <div class="clearfix">
+            <a class="btn btn-primary float-right" href="/Archive">Older Posts &rarr;</a>
+        </div>
+    </div>
+</div>
